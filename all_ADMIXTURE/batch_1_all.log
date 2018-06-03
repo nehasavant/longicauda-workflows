@@ -1,0 +1,29 @@
+PLINK v1.90b5.4 64-bit (10 Apr 2018)
+Options in effect:
+  --allow-extra-chr 0
+  --file batch_1.plink
+  --make-bed
+  --out batch_1_all
+
+Hostname: dyn-129-236-208-33.dyn.columbia.edu
+Working directory: /Users/nehasavant/Dropbox/Columbia_New_York/Salamanders/Downstream_Analyses/all_ADMIXTURE
+Start time: Mon Apr 23 13:53:16 2018
+
+Random number seed: 1524505996
+16384 MB RAM detected; reserving 8192 MB for main workspace.
+Scanning .ped file... done.
+Performing single-pass .bed write (9921 variants, 255 people).
+--file: batch_1_all-temporary.bed + batch_1_all-temporary.bim +
+batch_1_all-temporary.fam written.
+9921 variants loaded from .bim file.
+255 people (0 males, 0 females, 255 ambiguous) loaded from .fam.
+Ambiguous sex IDs written to batch_1_all.nosex .
+Using 1 thread (no multithreaded calculations invoked).
+Before main variant filters, 255 founders and 0 nonfounders present.
+Calculating allele frequencies... done.
+Total genotyping rate is 0.878115.
+9921 variants and 255 people pass filters and QC.
+Note: No phenotypes present.
+--make-bed to batch_1_all.bed + batch_1_all.bim + batch_1_all.fam ... done.
+
+End time: Mon Apr 23 13:53:16 2018

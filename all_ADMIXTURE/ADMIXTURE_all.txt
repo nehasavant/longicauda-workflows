@@ -1,0 +1,95 @@
+##### CODE FOR ADMIXTURE FOR SUBURBAN SALS- using plink then running admixture ######
+
+#Print working directory, change to proper working directory
+MAC-Dx:Suburban Sampling Data Sheets nicolefusco$ cd SubSal\ Statistics/
+MAC-Dx:SubSal Statistics nicolefusco$ ls
+ADMIXTURE-subsal	DAPC
+MAC-Dx:SubSal Statistics nicolefusco$ CD ADMIXTURE-subsal/
+MAC-Dx:SubSal Statistics nicolefusco$ cd ADMIXTURE-subsal/
+MAC-Dx:ADMIXTURE-subsal nicolefusco$ 
+
+#Use PLINK to recode file and create a .ped, .map files
+MAC-Dx:ADMIXTURE-subsal nicolefusco$ ./plink —file batch_1.plink --allow-extra-chr 0 --recode12 --out batch_1_subsal
+PLINK v1.90b3w 64-bit (3 Sep 2015)         https://www.cog-genomics.org/plink2
+(C) 2005-2015 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Note: --recode12 flag deprecated.  Use 'recode 12 ...'.
+Logging to batch_1_subsal.log.
+Options in effect:
+  --allow-extra-chr 0
+  --file batch_1.plink
+  --out batch_1_subsal
+  --recode 12
+
+16384 MB RAM detected; reserving 8192 MB for main workspace.
+.ped scan complete (for binary autoconversion).
+Performing single-pass .bed write (55049 variants, 191 people).
+--file: batch_1_subsal-temporary.bed + batch_1_subsal-temporary.bim +
+batch_1_subsal-temporary.fam written.
+55049 variants loaded from .bim file.
+191 people (0 males, 0 females, 191 ambiguous) loaded from .fam.
+Ambiguous sex IDs written to batch_1_subsal.nosex .
+Using 1 thread (no multithreaded calculations invoked.
+Before main variant filters, 191 founders and 0 nonfounders present.
+Calculating allele frequencies... done.
+Total genotyping rate is 0.577093.
+55049 variants and 191 people pass filters and QC.
+Note: No phenotypes present.
+--recode to batch_1_subsal.ped + batch_1_subsal.map ... done.
+MAC-Dx:ADMIXTURE-subsal nicolefusco$ 
+
+#Create a .bed file
+MAC-Dx:ADMIXTURE-subsal nicolefusco$ ./plink --file batch_1_subsal --allow-extra-chr 0 --make-bed --out batch_1_subsal
+PLINK v1.90b3w 64-bit (3 Sep 2015)         https://www.cog-genomics.org/plink2
+(C) 2005-2015 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to batch_1_subsal.log.
+Options in effect:
+  --allow-extra-chr 0
+  --file batch_1_subsal
+  --make-bed
+  --out batch_1_subsal
+
+16384 MB RAM detected; reserving 8192 MB for main workspace.
+.ped scan complete (for binary autoconversion).
+Performing single-pass .bed write (55049 variants, 191 people).
+--file: batch_1_subsal-temporary.bed + batch_1_subsal-temporary.bim +
+batch_1_subsal-temporary.fam written.
+55049 variants loaded from .bim file.
+191 people (0 males, 0 females, 191 ambiguous) loaded from .fam.
+Ambiguous sex IDs written to batch_1_subsal.nosex .
+Using 1 thread (no multithreaded calculations invoked.
+Before main variant filters, 191 founders and 0 nonfounders present.
+Calculating allele frequencies... done.
+Total genotyping rate is 0.577093.
+55049 variants and 191 people pass filters and QC.
+Note: No phenotypes present.
+--make-bed to batch_1_subsal.bed + batch_1_subsal.bim + batch_1_subsal.fam ...
+done.
+MAC-Dx:ADMIXTURE-subsal nicolefusco$ 
+
+#Run to make sure ADMIXTURE will run
+Paul-Fuscos-MacBook-Pro:admixture_macosx-1.23 plfusco$ ./admixture
+Usage: admixture <input file> <K>
+See --help or manual for more advanced usage.
+
+#Run ADMIXTURE on bed FILE with 14 populations
+Matthews-Mac-Pro:admixture mcombs$ ./admixture32 batch_1_subsal.bed 14
+
+#Cross validation of ADMXITURE
+Matthews-Mac-Pro:admixture mcombs$ for K in 1 2 3 4 5 6 7 8 9 10 11 12 13 14; do ./admixture32 --cv batch_1_subsal.bed $K | tee log${K}.out; done
+
+#CV ERRORS
+Matthews-Mac-Pro:admixture mcombs$ grep -h CV log*.out
+CV error (K=1): 0.65668
+CV error (K=2): 0.66060
+CV error (K=3): 0.67338
+CV error (K=4): 0.69519
+CV error (K=5): 0.73377
+CV error (K=6): 0.76226
+CV error (K=7): 0.80255
+CV error (K=8): 0.83691
+CV error (K=9): 0.88040
+CV error (K=10): 0.93761
+CV error (K=11): 0.97383
+CV error (K=12): 1.00052
+CV error (K=13): 1.03263
+CV error (K=14): 1.10815
